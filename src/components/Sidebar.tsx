@@ -1,24 +1,23 @@
-import React, { useState } from 'react'; // Import React and useState hook
+import React from 'react';
 
-const Sidebar: React.FC = () => {
-  const [isSidebarVisible, setSidebarVisible] = useState<boolean>(true); // Track sidebar visibility
+interface SidebarProps {
+  isVisible: boolean;
+  toggleSidebar: () => void;
+}
 
-  const toggleSidebar = () => {
-    setSidebarVisible((prevState) => !prevState); // Toggle sidebar visibility
-  };
-
+const Sidebar: React.FC<SidebarProps> = ({ isVisible, toggleSidebar }) => {
   return (
     <div>
-      <button onClick={toggleSidebar} className="toggle-sidebar-btn"> {/* Toggle sidebar button */}
-        {isSidebarVisible ? 'Hide Sidebar' : 'Show Sidebar'} {/* Button text changes */}
+      <button onClick={toggleSidebar} className="toggle-sidebar-btn">
+        {isVisible ? 'Hide Sidebar' : 'Show Sidebar'}
       </button>
-      {isSidebarVisible && ( // Show sidebar only if visible
+      {isVisible && (
         <div className="sidebar">
-          <h2 className="sidebar-header">Sidebar</h2> {/* Sidebar header */}
+          <h2 className="sidebar-header">Sidebar</h2>
           <ul>
-            <li><a href="#" className="sidebar-link">Home</a></li> {/* Link to Home */}
-            <li><a href="#" className="sidebar-link">Tasks</a></li> {/* Link to Tasks */}
-            <li><a href="#" className="sidebar-link">Settings</a></li> {/* Link to Settings */}
+            <li><a href="#" className="sidebar-link">Home</a></li>
+            <li><a href="#" className="sidebar-link">Tasks</a></li>
+            <li><a href="#" className="sidebar-link">Settings</a></li>
           </ul>
         </div>
       )}
@@ -26,4 +25,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar; // Export Sidebar component
+export default Sidebar;
