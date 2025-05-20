@@ -6,10 +6,10 @@ import type { Task } from "../data/testData";
 import AddItem from "./AddItem";
 
 const App: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(testData);
+  const [tasks, setTasks] = useState<Task[]>(testData); //this is the useState hook that initializes the tasks with testData, OR "displays" the test data in the TaskCard component *************************************************************
   const [sidebarVisible, setSidebarVisible] = useState<boolean>(true);
 
-  const deleteTask = (id: number) => {
+  const deleteTask = (id: number) => { //This creates a new arrray by copying the tasks array and filtering out the task with the given id and then sets the new state with "setTasks"  ************************************************************
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
@@ -39,7 +39,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container" style={{ display: "flex" }}>
+    <div
+  className={`app-container ${!sidebarVisible ? "sidebar-hidden" : ""}`}
+  style={{ display: "flex", width: "100%" }}
+>
       <Sidebar
         isVisible={sidebarVisible}
         toggleSidebar={() => setSidebarVisible((prev) => !prev)}
@@ -49,7 +52,7 @@ const App: React.FC = () => {
           <div className="content">
             <h1>To-Do List</h1>
             <AddItem addItem={addItem} />
-            <TaskCard
+            <TaskCard //This passes the tasks array to TaskCard        *********************************************************
               tasks={tasks}
               onDelete={deleteTask}
               onToggle={toggleCompletion}

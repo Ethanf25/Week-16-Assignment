@@ -89,8 +89,8 @@ body {
   align-items: flex-start;
 }
 
-.sidebar.hidden + .main-content {
-  margin-left: 0;
+.sidebar-hidden .toggle-sidebar-btn {
+  left: 20px;
 }
 
 /* ===== Toggle Sidebar Button ===== */
@@ -98,17 +98,16 @@ body {
   position: fixed;
   top: 20px;
   left: 130px;
-  background-color: #1abc9c; /* Turquoise */
+  background-color: #1abc9c;
   color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
   z-index: 1100;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, left 0.3s ease;
   user-select: none;
 }
-
 .toggle-sidebar-btn:hover {
   background-color: #16a085; /* Darker turquoise */
   transform: scale(1.05);
@@ -253,4 +252,10 @@ button:focus {
 
 .add-item button:hover {
   background-color: #009c9c;
+}
+
+.sidebar-hidden .main-content {
+  margin-left: 0;
+  align-items: center;
+  justify-content: center;
 }

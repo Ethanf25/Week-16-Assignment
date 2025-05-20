@@ -1,3 +1,4 @@
+// ==== Sidebar.tsx ====
 import React from 'react';
 
 interface SidebarProps {
@@ -8,12 +9,15 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isVisible, toggleSidebar }) => {
   return (
     <div>
-      <button onClick={toggleSidebar} className="toggle-sidebar-btn">
+      <button
+        onClick={toggleSidebar}
+        className={`toggle-sidebar-btn ${!isVisible ? 'top-left' : ''}`}
+      >
         {isVisible ? 'Hide Sidebar' : 'Show Sidebar'}
       </button>
       {isVisible && (
         <div className="sidebar">
-          <h2 className="sidebar-header">Sidebar</h2>
+          <h2 className="sidebar-header">Navigate</h2>
           <ul>
             <li><a href="#" className="sidebar-link">Home</a></li>
             <li><a href="#" className="sidebar-link">Tasks</a></li>

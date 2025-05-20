@@ -7,6 +7,6 @@ export interface Task {
 }
 
 // Example test data:
-export const testData: Task[] = [
+export const testData: Task[] = [ //this shows the test data for the tasks array in the App component
   
 ];

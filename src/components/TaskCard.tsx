@@ -32,7 +32,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ tasks, onDelete, onToggle, onEdit }
     <div>
       {tasks.map((task) => (
         <div className="item-card" key={task.id}>
-          {editingId === task.id ? (  // If this task is being edited
+          {editingId === task.id ? ( // If this task is being edited
             <>
               <input
                 value={editText} // Input value is current editText state
@@ -46,14 +46,16 @@ const TaskCard: React.FC<TaskCardProps> = ({ tasks, onDelete, onToggle, onEdit }
               <button onClick={() => saveEdit(task.id)}>Save</button> {/* Save button */}
               <button onClick={cancelEdit}>Cancel</button> {/* Cancel button */}
             </>
-          ) : (  // If not editing, show task name with controls
+          ) : (
             <>
-              <span
-                onClick={() => onToggle(task.id)} // Toggle completion on click
-                style={{ textDecoration: task.completed ? "line-through" : "none" }} // Strike-through if completed
-              >
-                {task.name} {/* Display task name */}
-              </span>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={task.completed} // Checkbox reflects task completion
+                  onChange={() => onToggle(task.id)} // Toggle task completion
+                />
+                <span style={{ marginLeft: "8px" }}>{task.name}</span> {/* Display task name */}
+              </label>
               <button onClick={() => startEditing(task)}>Edit</button> {/* Edit button */}
               <button onClick={() => onDelete(task.id)}>Delete</button> {/* Delete button */}
             </>
