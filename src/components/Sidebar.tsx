@@ -1,27 +1,25 @@
-// ==== Sidebar.tsx ====
-import React from 'react'; // I imported React to use JSX syntax and create components
 
-interface SidebarProps {
-  isVisible: boolean; // This is a prop that determines if the sidebar is visible or not using a boolean value (true or false)
-  toggleSidebar: () => void; // This is a function prop that will be called to toggle the visibility of the sidebar
-}
+import React, { useState } from 'react'; // Import React and useState hook
 
-const Sidebar: React.FC<SidebarProps> = ({ isVisible, toggleSidebar }) => { //to define the Sidebar component, I used React.FC to type it as a functional component
-  return ( // so then I returned the JSX layout of the component
-    <div> {}
-      <button
-        onClick={toggleSidebar} // then created a button and when clicked, it calls the toggleSidebar function passed from the parent component
-        className={`toggle-sidebar-btn ${!isVisible ? 'top-left' : ''}`} // this line sets the class name for the button, adding 'top-left' if the sidebar is not visible
-      >
-        {isVisible ? 'Hide Sidebar' : 'Show Sidebar'}
+const Sidebar: React.FC = () => {
+  const [isSidebarVisible, setSidebarVisible] = useState<boolean>(true); // Track sidebar visibility
+
+  const toggleSidebar = () => {
+    setSidebarVisible((prevState) => !prevState); // Toggle sidebar visibility
+  };
+
+  return (
+    <div>
+      <button onClick={toggleSidebar} className="toggle-sidebar-btn"> {/* Toggle sidebar button */}
+        {isSidebarVisible ? 'Hide Sidebar' : 'Show Sidebar'} {/* Button text changes */}
       </button>
-      {isVisible && ( // This line checks if the sidebar is visible, if true, it renders the sidebar content
-        <div className="sidebar"> {/* Sidebar container */}
-          <h2 className="sidebar-header">Navigate</h2> {/* Sidebar title/header */}
-          <ul> {/* Unordered list for navigation links */}
-            <li><a href="#" className="sidebar-link">Home</a></li> {/* Navigation link to Home */}
-            <li><a href="#" className="sidebar-link">Tasks</a></li> {/* Navigation link to Tasks */}
-            <li><a href="#" className="sidebar-link">Settings</a></li> {/* Navigation link to Settings */}
+      {isSidebarVisible && ( // Show sidebar only if visible
+        <div className="sidebar">
+          <h2 className="sidebar-header">Sidebar</h2> {/* Sidebar header */}
+          <ul>
+            <li><a href="#" className="sidebar-link">Home</a></li> {/* Link to Home */}
+            <li><a href="#" className="sidebar-link">Tasks</a></li> {/* Link to Tasks */}
+            <li><a href="#" className="sidebar-link">Settings</a></li> {/* Link to Settings */}
           </ul>
         </div>
       )}
@@ -29,4 +27,4 @@ const Sidebar: React.FC<SidebarProps> = ({ isVisible, toggleSidebar }) => { //to
   );
 };
 
-export default Sidebar; // Export the Sidebar component so it can be imported and used in other files
+export default Sidebar; // Export Sidebar component

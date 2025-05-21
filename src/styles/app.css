@@ -1,76 +1,61 @@
-/* ===== Reset & Base Styles ===== */
-* {
-  box-sizing: border-box;
-}
 
+/* General body and container styles */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
   background-color: #888888;
-  color: #ecf0f1;
 }
 
-/* ===== Layout ===== */
 .app {
   display: flex;
-  min-height: 100vh;
 }
 
-/* ===== Sidebar ===== */
+/* Sidebar styles */
 .sidebar {
+  width: 250px;
+  background-color: #5f5f5f; /* Dark grey background */
+  color: #ecf0f1; /* Light grey text */
+  padding: 20px;
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
   height: 100vh;
-  background-color: #5f5f5f; /* Dark grey */
-  padding: 20px;
-  color: #ecf0f1;
-  transform: translateX(0);
   transition: transform 0.3s ease-in-out;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar.hidden {
-  transform: translateX(-100%);
+  z-index: 10;
 }
 
 .sidebar-header {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #25e9e9; /* Turquoise */
+  font-weight: bold;
+  color: #25e9e9; /* Turquoise header */
   margin-bottom: 20px;
-  user-select: none;
 }
 
 .sidebar-link {
+  color: #25e9e9; /* Turquoise links */
+  text-decoration: none;
+  font-size: 1.2rem;
   display: block;
   margin: 15px 0;
-  font-size: 1.2rem;
-  color: #25e9e9; /* Turquoise */
-  text-decoration: none;
   padding: 8px;
   border-radius: 5px;
-  transition: background-color 0.3s ease, padding-left 0.3s ease;
-  user-select: none;
+  transition: padding 0.3s ease; /* Move from :hover to here for better performance */
 }
 
 .sidebar-link:hover {
-  background-color: #5e5e5e; /* Slightly lighter grey */
+  background-color: #5e5e5e; /* Grey background on hover */
   padding-left: 12px;
 }
 
 .sidebar-footer {
-  margin-top: auto;
+  margin-top: 20px;
   font-size: 0.9rem;
-  color: #585858;
+  color: #585858; /* Lighter grey footer text */
 }
 
 .sidebar-footer a {
-  color: #1abc9c; /* Turquoise */
+  color: #1abc9c; /* Turquoise footer link */
   text-decoration: none;
 }
 
@@ -78,105 +63,86 @@ body {
   text-decoration: underline;
 }
 
-/* ===== Main Content ===== */
+/* Sidebar toggle button */
+.toggle-sidebar-btn {
+  background-color: #1abc9c; /* Turquoise background */
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: #16a085; /* Darker turquoise on hover */
+}
+
+.toggle-sidebar-btn:focus {
+  outline: none;
+}
+
+/* Main content */
 .main-content {
   flex-grow: 1;
-  margin-left: 250px;
   padding: 20px;
-  transition: margin-left 0.3s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
-.sidebar-hidden .toggle-sidebar-btn {
-  left: 20px;
-}
-
-/* ===== Toggle Sidebar Button ===== */
-.toggle-sidebar-btn {
-  position: fixed;
-  top: 20px;
-  left: 130px;
-  background-color: #1abc9c;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1100;
-  transition: background-color 0.3s ease, transform 0.2s ease, left 0.3s ease;
-  user-select: none;
-}
-.toggle-sidebar-btn:hover {
-  background-color: #16a085; /* Darker turquoise */
-  transform: scale(1.05);
-}
-
-.toggle-sidebar-btn:focus {
-  outline: none;
-  transform: scale(1.05);
-}
-
-.toggle-sidebar-btn.active {
-  background-color: #149a8a;
-  transform: scale(1.1);
-}
-
-/* ===== Item Card ===== */
+/* Item card styling */
 .item-card {
   width: 95%;
   max-width: 800px;
+  padding: 20px;
   background-color: #5f5f5f;
   border: 1px solid #25e9e9;
   border-radius: 8px;
-  padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== Headings ===== */
 h1 {
   text-align: center;
   color: #25e9e9;
 }
 
-/* ===== Lists ===== */
 ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
+/* Item list styling */
 .item-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px;
   border-bottom: 1px solid #ffffff;
   position: relative;
-  padding-right: 50px;
+  padding-right: 50px; /* space for the absolutely positioned delete button */
 }
 
 .item-list-item span {
   flex-grow: 1;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   color: #ffffff;
 }
 
-/* ===== Delete Button ===== */
+/* Delete button styling */
 .delete-button {
   position: absolute;
   right: 10px;
   opacity: 0;
+  transition: opacity 0.3s ease-in-out;
   background-color: #e74c3c;
   color: white;
-  border: none;
   padding: 5px 10px;
+  border: none;
   cursor: pointer;
   border-radius: 5px;
-  transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
 }
 
 .item-list-item:hover .delete-button {
@@ -191,16 +157,14 @@ ul {
   outline: none;
 }
 
-/* ===== Buttons ===== */
+/* General button styling */
 button {
   padding: 8px 15px;
   border: none;
-  border-radius: 5px;
   background-color: #00b8b8;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
+  border-radius: 5px;
 }
 
 button:hover {
@@ -211,7 +175,7 @@ button:focus {
   outline: none;
 }
 
-/* ===== Add Task Section ===== */
+/* Add task button styling */
 .add-task-container {
   display: flex;
   justify-content: flex-end;
@@ -220,14 +184,22 @@ button:focus {
 
 .add-task-button {
   background-color: #00b8b8;
+  color: white;
   padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .add-task-button:hover {
   background-color: #009c9c;
 }
 
-/* ===== Add Item Form ===== */
+.add-task-button:focus {
+  outline: none;
+}
+
+/* Add Item form styling */
 .add-item {
   display: flex;
   justify-content: space-between;
@@ -240,22 +212,24 @@ button:focus {
 .add-item input {
   flex-grow: 1;
   padding: 10px;
+  margin-right: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 10px;
 }
 
 .add-item button {
-  background-color: #00b8b8;
   padding: 10px 15px;
+  background-color: #00b8b8;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .add-item button:hover {
   background-color: #009c9c;
 }
 
-.sidebar-hidden .main-content {
-  margin-left: 0;
-  align-items: center;
-  justify-content: center;
+.add-item button:focus {
+  outline: none;
 }

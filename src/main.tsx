@@ -1,3 +1,4 @@
+
 import React from 'react'; // Import React library
 import ReactDOM from 'react-dom/client'; // Import ReactDOM for rendering
 import App from './components/App'; // Import main App component
