@@ -21,7 +21,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ tasks, onDelete, onToggle, onEdit }
   const saveEdit = (id: number) => {
     if (editText.trim()) {
       onEdit(id, editText.trim()); // Call onEdit prop with new trimmed name
-      setEditingId(null); // Exit editing mode
+      setEditingId(null); // Exit editing` mode
     }
   };
 
