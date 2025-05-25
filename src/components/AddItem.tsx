@@ -1,33 +1,32 @@
+import React, { useState } from "react"; // Import React and the useState hook
 
-import React, { useState } from 'react'; // Import React and the useState hook from the React library
-
+// Define the props interface with addItem function prop
 interface AddItemProps {
-  addItem: (item: string) => void; // Define a prop called addItem which is a function that takes a string and returns "void"
-} 
+  addItem: (item: string) => void; // addItem is a function that takes a string and returns nothing (void)
+}
 
-const AddItem: React.FC<AddItemProps> = ({ addItem }) => { // This line defines a functional component with props typed using "A"ddItemProps"
-  
-  const [newItem, setNewItem] = useState<string>(''); // This is used to declare a state variable "newItem" with initial value as an empty string
+// Functional component typed with AddItemProps
+const AddItem: React.FC<AddItemProps> = ({ addItem }) => { // Define the AddItem component and destructure the addItem prop
+  const [inputValue, setInputValue] = useState(""); // Declare state to keep track of the input value, initialized as an empty string
 
-  const handleAddClick = () => { // This defines a function to handle clicking the "Add Task" button
-    if (newItem.trim()) { // this line checks if "newItem" is not just empty or whitespace
-      addItem(newItem); // Then it calls the "addItem" function passed from the parent component with "newItem" as an argument
-      setNewItem(''); // This line clears the input field by resetting "newItem" to an empty string
+  const handleAddClick = () => { // Define the function to run when the button is clicked
+    if (inputValue.trim()) { // Only proceed if the input is not just whitespace
+      addItem(inputValue); // Call the addItem function passed via props with the current input value
+      setInputValue(""); // Clear the input field after adding the task
     }
   };
 
-  return ( // This is the return function that is going to return the JSX that describes the component’s UI, this includes a, container div with a class name for styling, an input field
-    // for the user to type in a new task, and a button to add the task
-    <div className="add-item"> 
+  return ( // JSX that defines the component's UI
+    <div className="add-item"> {/* Container for input and button */}
       <input
-        type="text" 
-        value={newItem} 
-        onChange={(e) => setNewItem(e.target.value)} 
-        placeholder="Add a new task" 
-      /> 
-      <button onClick={handleAddClick}>Add Task</button> 
-    </div> // This is the button that calls the "handleAddClick" function when clicked
-  ); 
+        type="text" // Set the input type to text
+        value={inputValue} // Bind the input field to the state value
+        onChange={(e) => setInputValue(e.target.value)} // Update state when user types in the input
+        placeholder="Add a new task" // Placeholder text shown when input is empty
+      />
+      <button onClick={handleAddClick}>Add Task</button> {/* Button that triggers handleAddClick when clicked */}
+    </div>
+  );
 };
 
-export default AddItem; // Export component for use elsewhere
+export default AddItem; // Export the component so it can be used in other files

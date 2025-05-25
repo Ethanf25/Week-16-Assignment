@@ -1,69 +1,110 @@
-import React, { useState } from "react"; // Import React and the useState hook for managing component state
-import Sidebar from "./Sidebar"; // Import the Sidebar component
-import TaskCard from "./TaskCard"; // Import the TaskCard component
-import { testData } from "../data/testData"; // Import the test data array from the data file
-import type { Task } from "../data/testData"; // Import the Task type definition for TypeScript type checking
-import AddItem from "./AddItem"; // Import the AddItem component
+// Import React and useState hook for managing component state
+import React, { useState } from "react"; // Import necessary modules from React
 
-const App: React.FC = () => { // This line defines the main app component using React.FC
-  const [tasks, setTasks] = useState<Task[]>(testData); // Declares the tasks state initialized with testData
-  const [sidebarVisible, setSidebarVisible] = useState<boolean>(true); // Declare sidebarVisible state to control the visibility of the sidebar
+// Import custom components used in the app
+import Sidebar from "./Sidebar"; // Sidebar component for filters and visibility toggle
+import TaskCard from "./TaskCard"; // TaskCard component for displaying tasks
+import AddItem from "./AddItem"; // AddItem component for adding new tasks
 
-  // Delete a task by filtering out the task with matching id
-  const deleteTask = (id: number) => { // Define the function to delete a task by id
-    setTasks(tasks.filter((task) => task.id !== id)); // this line updates the tasks state by filtering out the task with the given id
+// Import test data and Task type definition
+import { testData } from "../data/testData"; // Sample data to initialize tasks
+import type { Task } from "../data/testData"; // Type definition for a Task
+
+// Define the App functional component
+const App: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>(testData); // State to hold the list of tasks
+  const [sidebarVisible, setSidebarVisible] = useState<boolean>(true); // State to toggle sidebar visibility
+  const [filterText, setFilterText] = useState<string>(""); // State to store filter text for searching tasks
+
+  // Function to delete a task by its ID
+  const deleteTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id)); // Remove task from the list by filtering it out
   };
 
-  // Toggle completed state of a task
-  const toggleCompletion = (id: number) => { // here I defined the function to toggle the completion status of a task
-    setTasks( // and then used the setTasks function to update the tasks state
-      tasks.map((task) => // and then I used the map function to loop through each task
-        task.id === id ? { ...task, completed: !task.completed } : task // This line checks if the task id matches the given id, if it does,
-        //  it toggles the completed status, otherwise, it returns the task unchanged
+  // Function to toggle the completion status of a task
+  const toggleCompletion = (id: number) => {
+    setTasks(
+      tasks.map((task) => // Map through the tasks to find the matching ID
+        task.id === id ? { ...task, completed: !task.completed } : task // Toggle the 'completed' field
       )
     );
   };
 
-  // Add a new task to the list
-  const addItem = (item: string) => { // this line is used to define the function to add a new task
-    const newTask = { // this is where I used const to create a new task object
-      id: tasks.length + 1, // then generated a new id for the task based on the current length of the tasks array
-      name: item, // and then set the name of the task to the item passed in
-      completed: false, // which resulted in the completed status being set to false
+  // Function to add a new task to the list
+  const addItem = (item: string) => {
+    const newTask = {
+      id: tasks.length + 1, // Assign a unique ID based on list length
+      name: item, // Set the task name
+      completed: false, // New tasks start as incomplete
     };
-    setTasks([...tasks, newTask]); // then this line will update the tasks state by spreading the existing tasks
-    //  and adding the new task to the end of the array
+    setTasks([...tasks, newTask]); // Add the new task to the task list
   };
 
-  // Edit the name of an existing task
-  const editTaskName = (id: number, newName: string) => { //Here I defined the function to edit the name of a task
-    setTasks( // and then I used the setTasks function to update the tasks state
-      tasks.map((task) => // which then used the map function to loop through each task
-        task.id === id ? { ...task, name: newName } : task // so then if the task id matches the given id,
-        //  it updates the name of the task to the new name passed in
+  // Function to edit the name of a specific task
+  const editTaskName = (id: number, newName: string) => {
+    setTasks(
+      tasks.map((task) => // Map through tasks to find the task to update
+        task.id === id ? { ...task, name: newName } : task // Update the name if IDs match
       )
     );
   };
 
-  // Toggle sidebar visibility by updating state
+  // Function to toggle the sidebar's visibility
   const toggleSidebar = () => {
-    setSidebarVisible((prev: boolean) => !prev);
+    setSidebarVisible((prev) => !prev); // Flip the boolean value of sidebarVisible
   };
 
-  return ( // Return the JSX layout of the component
-    <div className={`\app ${!sidebarVisible ? "sidebar-hidden" : ""}`}> {/* Container that wraps both sidebar and main content, toggles sidebar-hidden class */}
-      <Sidebar isVisible={sidebarVisible} toggleSidebar={toggleSidebar} /> {/* Render Sidebar component and pass props */}
+  // Function to sort tasks alphabetically by name
+  const sortTasks = () => {
+    const sorted = [...tasks].sort((a, b) => a.name.localeCompare(b.name)); // Create a sorted copy of tasks
+    setTasks(sorted); // Update the state with sorted tasks
+  };
 
-      <div className={`main-content ${!sidebarVisible ? "expanded" : ""}`}> {/* Wrap main content in div and expand when sidebar is hidden */}
-        <div className="item-card">
-          <div className="content">
-            <h1>To-Do List</h1>
-            <AddItem addItem={addItem} />
-            <TaskCard // This renders the TaskCard component
-              tasks={tasks} // This will pass the current tasks array
-              onDelete={deleteTask} // then pass the function to delete a task
-              onToggle={toggleCompletion} // then pass the function to toggle the completion status
-              onEdit={editTaskName} // and then pass the function to edit the task name
+  // Filter the tasks based on the filterText input
+  const filteredTasks = tasks.filter((task) =>
+    task.name.toLowerCase().includes(filterText.toLowerCase()) // Match task names ignoring case
+  );
+
+  // Render the component UI
+  return (
+    <div className={`app ${!sidebarVisible ? "sidebar-hidden" : ""}`}> {/* Apply class to hide sidebar if needed */}
+      <Sidebar
+        isVisible={sidebarVisible} // Pass sidebar visibility state
+        toggleSidebar={toggleSidebar} // Pass function to toggle visibility
+        filterText={filterText} // Pass current filter text
+        onFilterChange={setFilterText} // Pass function to update filter text
+      />
+
+      <div className={`main-content ${!sidebarVisible ? "expanded" : ""}`}> {/* Expand content if sidebar is hidden */}
+        <div className="item-card"> {/* Container for the main content */}
+          <div className="content"> {/* Content section with heading and task controls */}
+            <h1>Task List</h1> {/* Page title */}
+
+            <AddItem addItem={addItem} /> {/* Render AddItem component with addItem function passed as prop */}
+
+            <button
+              onClick={sortTasks} // Run sortTasks when button is clicked
+              className="sort-button" // Apply custom class
+              style={{
+                padding: "8px 12px", // Button padding
+                marginTop: "10px", // Top margin
+                marginBottom: "20px", // Bottom margin
+                backgroundColor: "#4f46e5", // Indigo background color
+                color: "white", // White text
+                border: "none", // No border
+                borderRadius: "6px", // Rounded corners
+                cursor: "pointer", // Pointer cursor on hover
+              }}
+            >
+              Sort Tasks {/* Button text */}
+            </button>
+
+            {/* Render TaskCard component with filtered tasks */}
+            <TaskCard
+              tasks={filteredTasks} // Pass filtered list of tasks
+              onDelete={deleteTask} // Pass delete function
+              onToggle={toggleCompletion} // Pass toggle function
+              onEdit={editTaskName} // Pass edit function
             />
           </div>
         </div>
@@ -72,4 +113,5 @@ const App: React.FC = () => { // This line defines the main app component using 
   );
 };
 
-export default App; // Export the App component to be used elsewhere in the app
+// Export the App component as default
+export default App; // Allow the App component to be imported elsewhere

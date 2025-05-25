@@ -13,6 +13,8 @@ interface TaskCardProps {
 const TaskCard: React.FC<TaskCardProps> = ({ tasks, onDelete, onToggle, onEdit }) => { // I then used the TaskCardProps interface to type the props of the TaskCard component
   const [editingId, setEditingId] = useState<number | null>(null); // then used useState to create a state variable called "editingId" to keep track of which task is being edited
   const [editText, setEditText] = useState(""); // then used state to store the text for editing a task
+{/* Removed unused TaskCard instance to fix undefined variable errors */}
+
 
   const startEditing = (task: Task) => { // function to start editing a task
     setEditingId(task.id); // then set the editingId to the id of the task being edited
