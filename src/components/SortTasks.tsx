@@ -27,23 +27,23 @@ const SortTasks: React.FC<SortTasksProps> = ({ tasks, onSort }) => {
 
   return (
     <div>
-      {/* Button to trigger alphabetical sorting */}
+      {}
       <button
-        onClick={sortTasksAlphabetical} // Call alphabetical sort function on click
-        className="sort-button add-task-button" // Apply button styling classes
+        onClick={sortTasksAlphabetical} 
+        className="sort-button add-task-button" 
       >
-        Sort Tasks Alphabetically {/* Button label */}
+        Sort Tasks Alphabetically {}
       </button>
 
-      {/* Button to trigger numerical sorting */}
+      {}
       <button
-        onClick={sortTasksNumerical} // Call numerical sort function on click
-        className="sort-button add-task-button" // Apply button styling classes
+        onClick={sortTasksNumerical} 
+        className="sort-button add-task-button" 
       >
-        Sort Tasks Numerically {/* Button label */}
+        Sort Tasks Numerically {}
       </button>
-    </div>
+    </div> // these are the functions to sort tasks alphabetically and numerically
   );
 };
 
-export default SortTasks; // Export SortTasks component as default export
+export default SortTasks; // Export SortTasks

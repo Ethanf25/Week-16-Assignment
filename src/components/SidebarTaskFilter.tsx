@@ -1,27 +1,27 @@
-import React from "react"; // Import React library for JSX and component functionality
+import React from "react"; // Import React
 
-// Define props interface for SidebarTaskFilter component
+// Below I define props interface for the "SidebarTaskFilter" component
 interface SidebarTaskFilterProps {
-  filterText: string; // Current text to filter tasks, received from parent component
-  onFilterChange: (value: string) => void; // Callback to notify parent when filter text changes
+  filterText: string; // this is the current text to filter tasks, received from the parent component
+  onFilterChange: (value: string) => void; // this is the callback function to update the filter text in the parent component
 }
 
-// Functional component SidebarTaskFilter typed with React.FC and SidebarTaskFilterProps interface
-const SidebarTaskFilter: React.FC<SidebarTaskFilterProps> = ({
-  filterText, // Destructure filterText prop for controlled input value
-  onFilterChange, // Destructure onFilterChange callback prop to handle input changes
+// This is the functional component for filtering tasks in the sidebar
+const SidebarTaskFilter: React.FC<SidebarTaskFilterProps> = ({ // this will destructure props to get the following:
+  filterText, // first, destructure "filterText" prop to control the input value
+  onFilterChange, // thn destructure "onFilterChange" callback prop to handle input changes
 }) => {
   return (
     <div>
-      {/* Controlled input field for filtering tasks */}
+      {}
       <input
         type="text" // Input type text for filtering
-        value={filterText || ""} // Controlled value, fallback to empty string if undefined
-        onChange={(e) => onFilterChange(e.target.value)} // Call onFilterChange with new input value on change
-        placeholder="Filter tasks..." // Placeholder text shown when input is empty
+        value={filterText || ""} // this line sets the input value to the current filter text, or an empty string if it's undefined
+        onChange={(e) => onFilterChange(e.target.value)} // then this will call the "onFilterChange" function with the new input value whenever the input changes
+        placeholder="Filter tasks..." // this is just the placeholder text for the input field
       />
     </div>
   );
 };
 
-export default SidebarTaskFilter; // Export SidebarTaskFilter component as default export
+export default SidebarTaskFilter; // Export SidebarTaskFilter
